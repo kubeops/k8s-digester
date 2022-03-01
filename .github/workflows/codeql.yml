@@ -19,18 +19,18 @@ name: 'CodeQL'
 on:
   push:
     branches:
-    - main
+      - main
     paths-ignore:
-    - '**.md'
-    - 'docs/**'
+      - '**.md'
+      - 'docs/**'
   pull_request:
     branches:
-    - main
+      - main
     paths-ignore:
-    - '**.md'
-    - 'docs/**'
+      - '**.md'
+      - 'docs/**'
   schedule:
-  - cron: '30 0 * * 1'
+    - cron: '30 0 * * 1'
 
 jobs:
   analyze:
@@ -43,18 +43,18 @@ jobs:
         language: ['go']
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 2
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
 
-    - run: git checkout HEAD^2
-      if: ${{ github.event_name == 'pull_request' }}
+      - run: git checkout HEAD^2
+        if: ${{ github.event_name == 'pull_request' }}
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
-      with:
-        languages: ${{ matrix.language }}
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: ${{ matrix.language }}
 
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1

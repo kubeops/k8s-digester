@@ -19,33 +19,33 @@ name: Test
 on:
   push:
     paths-ignore:
-    - '**.md'
-    - 'docs/**'
+      - '**.md'
+      - 'docs/**'
   pull_request:
     paths-ignore:
-    - '**.md'
-    - 'docs/**'
+      - '**.md'
+      - 'docs/**'
 
 jobs:
   unit:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Setup Go
-      uses: actions/setup-go@v1
-      with:
-        go-version: 1.16
+      - name: Setup Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.17
 
-    - name: Restore dependency cache
-      uses: actions/cache@v2
-      with:
-        path: ~/go/pkg/mod
-        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-        restore-keys: |
-          ${{ runner.os }}-go-
+      - name: Restore dependency cache
+        uses: actions/cache@v2
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
 
-    - name: Unit test
-      run: go test -v -count=1 -race -short -timeout=5m -vet="asmdecl,assign,atomic,bools,buildtag,cgocall,composites,copylocks,errorsas,httpresponse,loopclosure,lostcancel,nilfunc,printf,shift,stdmethods,structtag,tests,unmarshal,unreachable,unsafeptr,unusedresult" ./...
+      - name: Unit test
+        run: go test -v -count=1 -race -short -timeout=5m -vet="asmdecl,assign,atomic,bools,buildtag,cgocall,composites,copylocks,errorsas,httpresponse,loopclosure,lostcancel,nilfunc,printf,shift,stdmethods,structtag,tests,unmarshal,unreachable,unsafeptr,unusedresult" ./...
